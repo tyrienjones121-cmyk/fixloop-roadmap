@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PYNDRYX — Master Feature Roadmap</title>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root{
       --bg0:#060a10;
@@ -43,19 +47,13 @@
       width:min(1120px, calc(100% - 32px));
       margin: 40px auto 60px;
     }
-    header{
-      margin-bottom: 18px;
-    }
+    header{ margin-bottom: 18px; }
     h1{
       font-size: clamp(26px, 4vw, 36px);
       margin:0 0 6px;
       letter-spacing:.2px;
     }
-    .sub{
-      color:var(--muted);
-      font-size: 13px;
-      margin: 0 0 6px;
-    }
+    .sub{ color:var(--muted); font-size: 13px; margin: 0 0 6px; }
     .byline{
       color: var(--muted2);
       font-size: 12px;
@@ -73,6 +71,7 @@
       border-radius: var(--radius2);
       background: linear-gradient(180deg, rgba(10,22,38,.78), rgba(8,16,28,.55));
       box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      align-items:center;
     }
     .chip{
       display:inline-flex;
@@ -90,6 +89,38 @@
     .chip .dot{
       width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.18);
       display:inline-block;
+    }
+
+    /* auth chip */
+    .authchip{
+      margin-left:auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .status{
+      font-size:12px;
+      color: rgba(255,255,255,.6);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      max-width: 360px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .status.ok{
+      border-color: rgba(38,230,165,.20);
+      background: rgba(38,230,165,.06);
+      color:#bff8e6;
+    }
+    .status.warn{
+      border-color: rgba(255,204,102,.22);
+      background: rgba(255,204,102,.06);
+      color:#ffe7b0;
     }
 
     .controls{
@@ -139,18 +170,9 @@
       background: rgba(255,211,106,.10);
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 10px;
-    }
-    .grid.two{
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 860px){
-      .grid.two{grid-template-columns:1fr}
-    }
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; margin-top: 10px; }
+    .grid.two{ grid-template-columns: 1fr 1fr; }
+    @media (max-width: 860px){ .grid.two{grid-template-columns:1fr} .authchip{margin-left:0} }
 
     details.card{
       border: 1px solid var(--border);
@@ -227,7 +249,6 @@
       gap: 8px;
     }
 
-    /* checkbox rows */
     .item{
       display:flex;
       align-items:flex-start;
@@ -278,11 +299,7 @@
       text-decoration-color: rgba(255,255,255,.18);
     }
 
-    .hint{
-      color: var(--muted2);
-      font-size: 12px;
-      margin: 10px 0 0;
-    }
+    .hint{ color: var(--muted2); font-size: 12px; margin: 10px 0 0; }
     .note{
       color: var(--muted2);
       font-size: 12px;
@@ -314,8 +331,71 @@
       color: rgba(255,255,255,.55);
     }
 
-    /* hidden filtering */
     .hidden{display:none !important}
+
+    /* Login modal */
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+      z-index: 50;
+    }
+    .modal{
+      width:min(520px, 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(12,24,40,.92), rgba(7,14,25,.88));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHeader{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .modalTitle{ font-weight:750; }
+    .modalBody{ padding: 14px 16px 16px; }
+    .field{
+      display:grid;
+      gap:6px;
+      margin-bottom: 10px;
+    }
+    .field label{ font-size:12px; color: var(--muted); }
+    .field input{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline:none;
+      font-size: 13px;
+    }
+    .modalActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      align-items:center;
+    }
+    .small{
+      font-size:12px;
+      color: var(--muted2);
+      margin-top: 10px;
+      line-height: 1.3rem;
+    }
+    .err{
+      font-size:12px;
+      color: #ffb4b4;
+      margin-top: 8px;
+      display:none;
+    }
   </style>
 </head>
 
@@ -327,11 +407,17 @@
       <div class="byline">A collaborative cyber-industrial systems project by Isaac D DePina &amp; Tyrien Jones</div>
 
       <div class="chipbar" id="chipbar">
-        <span class="chip"><span class="dot"></span> <b id="doneCount">11</b> done</span>
-        <span class="chip"><span class="dot"></span> <b id="plannedCount">73</b> planned</span>
+        <span class="chip"><span class="dot"></span> <b id="doneCount">0</b> done</span>
+        <span class="chip"><span class="dot"></span> <b id="plannedCount">0</b> planned</span>
         <span class="chip"><span class="dot"></span> <b>19</b> sections</span>
         <span class="chip"><span class="dot"></span> Goal <b>safe-first repair automation</b></span>
         <span class="chip"><span class="dot"></span> Audience <b>beginner → pro</b></span>
+
+        <div class="authchip">
+          <span id="authStatus" class="status warn">Not signed in — checkboxes locked</span>
+          <button class="btn primary" id="loginBtn">Login</button>
+          <button class="btn" id="logoutBtn" style="display:none;">Logout</button>
+        </div>
       </div>
 
       <div class="controls">
@@ -346,7 +432,7 @@
       </div>
     </header>
 
-    <!-- Top row: Current + Phase 1 (like your original layout) -->
+    <!-- Top row -->
     <div class="grid two">
       <details class="card section" data-section="current" open>
         <summary>
@@ -403,7 +489,7 @@
       </details>
     </div>
 
-    <!-- Phase 2..15 -->
+    <!-- Phase 2..15 + additions -->
     <div class="grid">
       <details class="card section" data-section="phase2" open>
         <summary>
@@ -723,56 +809,119 @@
     </div>
   </div>
 
+  <!-- Login Modal -->
+  <div class="modalOverlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modalHeader">
+        <div class="modalTitle" id="modalTitle">Login</div>
+        <button class="btn" id="closeModalBtn">Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="field">
+          <label for="emailInput">Email</label>
+          <input id="emailInput" type="email" autocomplete="email" placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label for="passInput">Password</label>
+          <input id="passInput" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <div class="modalActions">
+          <button class="btn primary" id="doLoginBtn">Sign in</button>
+          <button class="btn" id="clearCredsBtn">Clear</button>
+        </div>
+        <div class="err" id="loginErr"></div>
+        <div class="small">
+          Only approved users can sign in. If you turned signups off (recommended), you must create users inside Supabase → Authentication → Users.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function(){
       const $ = (q, el=document)=>el.querySelector(q);
       const $$ = (q, el=document)=>Array.from(el.querySelectorAll(q));
 
+      // -------------------- CONFIG: PASTE YOUR SUPABASE KEYS HERE --------------------
+      const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";
+      const SUPABASE_ANON_KEY = "PASTE_YOUR_PUBLISHABLE_ANON_KEY_HERE";
+      // ------------------------------------------------------------------------------
+
+      const STORAGE_KEY = "pyndryx_roadmap_checks_v1";          // local backup
+      const TABLE = "roadmap_progress";                         // Supabase table
+      const SAVE_DEBOUNCE_MS = 500;
+
       // Year
       $("#year").textContent = new Date().getFullYear();
 
-      // Persisted checkbox state
-      const STORAGE_KEY = "pyndryx_roadmap_checks_v1";
-      const saved = (() => {
+      // Elements
+      const authStatusEl = $("#authStatus");
+      const loginBtn = $("#loginBtn");
+      const logoutBtn = $("#logoutBtn");
+
+      const modalOverlay = $("#modalOverlay");
+      const closeModalBtn = $("#closeModalBtn");
+      const doLoginBtn = $("#doLoginBtn");
+      const clearCredsBtn = $("#clearCredsBtn");
+      const emailInput = $("#emailInput");
+      const passInput = $("#passInput");
+      const loginErr = $("#loginErr");
+
+      // UI helpers
+      function showModal(){
+        modalOverlay.style.display = "flex";
+        modalOverlay.setAttribute("aria-hidden", "false");
+        loginErr.style.display = "none";
+        loginErr.textContent = "";
+        setTimeout(()=>emailInput.focus(), 0);
+      }
+      function hideModal(){
+        modalOverlay.style.display = "none";
+        modalOverlay.setAttribute("aria-hidden", "true");
+      }
+      function setStatus(text, kind){
+        authStatusEl.textContent = text;
+        authStatusEl.classList.remove("ok","warn");
+        authStatusEl.classList.add(kind === "ok" ? "ok" : "warn");
+      }
+      function lockCheckboxes(locked){
+        for (const cb of $$(".item input[type=checkbox]")){
+          cb.disabled = !!locked;
+          cb.style.cursor = locked ? "not-allowed" : "pointer";
+          cb.style.opacity = locked ? "0.55" : "1";
+        }
+      }
+
+      // Start locked until we know auth state
+      lockCheckboxes(true);
+
+      // Load local backup (fast) first
+      let saved = (() => {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
         catch { return {}; }
       })();
 
-      // Default: mark "Current Features" as checked if nothing saved yet
-      const hasAnySaved = Object.keys(saved).length > 0;
-
-      const items = $$(".item");
-      for (const it of items){
-        const key = it.getAttribute("data-key");
-        const cb = $("input[type=checkbox]", it);
-        if (!key || !cb) continue;
-
-        if (saved[key] !== undefined){
-          cb.checked = !!saved[key];
-        } else if (!hasAnySaved && key.startsWith("current-")){
-          cb.checked = true;
-        }
-
-        updateItemVisual(it, cb.checked);
-
-        cb.addEventListener("change", () => {
-          saved[key] = cb.checked;
-          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch(e){}
-          updateItemVisual(it, cb.checked);
-          updateCounts();
-          if (plannedOnlyOn) applyPlannedOnly(true);
-          applySearchFilter();
-        });
-      }
-
+      // Apply state to UI
       function updateItemVisual(itemEl, isDone){
         itemEl.classList.toggle("done", !!isDone);
+      }
+      function applyStateToUI(){
+        const items = $$(".item");
+        for (const it of items){
+          const key = it.getAttribute("data-key");
+          const cb = $("input[type=checkbox]", it);
+          if (!key || !cb) continue;
+          cb.checked = !!saved[key];
+          updateItemVisual(it, cb.checked);
+        }
+        updateCounts();
+        if (plannedOnlyOn) applyPlannedOnly(true);
+        applySearchFilter();
       }
 
       // Counts
       const doneEl = $("#doneCount");
       const plannedEl = $("#plannedCount");
-
       function updateCounts(){
         const all = $$(".item input[type=checkbox]");
         const done = all.filter(cb => cb.checked).length;
@@ -780,13 +929,10 @@
         doneEl.textContent = String(done);
         plannedEl.textContent = String(planned);
       }
-      updateCounts();
 
       // Expand/collapse all
       const sections = $$(".section");
-      $("#expandAll").addEventListener("click", () => {
-        for (const s of sections) s.open = true;
-      });
+      $("#expandAll").addEventListener("click", () => { for (const s of sections) s.open = true; });
       $("#collapseAll").addEventListener("click", () => {
         for (const s of sections) s.open = false;
         window.scrollTo({top:0, behavior:"smooth"});
@@ -794,7 +940,6 @@
 
       // Planned-only toggle
       let plannedOnlyOn = false;
-
       function applyPlannedOnly(on){
         plannedOnlyOn = on;
         const btn = $("#showPlannedOnly");
@@ -806,16 +951,12 @@
           const hideBecauseDone = on && cb && cb.checked;
           it.classList.toggle("hidden", hideBecauseDone || !matchesSearch);
         }
-        // hide whole sections if all items hidden
         for (const sec of sections){
           const visibleItems = $$(".item", sec).filter(x => !x.classList.contains("hidden"));
           sec.classList.toggle("hidden", visibleItems.length === 0);
         }
       }
-
-      $("#showPlannedOnly").addEventListener("click", () => {
-        applyPlannedOnly(!plannedOnlyOn);
-      });
+      $("#showPlannedOnly").addEventListener("click", () => { applyPlannedOnly(!plannedOnlyOn); });
 
       $("#showAll").addEventListener("click", () => {
         plannedOnlyOn = false;
@@ -828,10 +969,9 @@
         $("#searchInput").value = "";
       });
 
-      // Search filter (hides list items + empty sections)
+      // Search filter
       const searchInput = $("#searchInput");
       function normalize(s){ return (s||"").toLowerCase().trim(); }
-
       function applySearchFilter(){
         const q = normalize(searchInput.value);
 
@@ -840,24 +980,18 @@
           const hit = !q || text.includes(q);
           it.classList.toggle("search-hidden", !hit);
         }
-
-        // Now combine with planned-only state:
         for (const it of $$(".item")){
           const cb = $("input[type=checkbox]", it);
           const matchesSearch = !it.classList.contains("search-hidden");
           const hideBecauseDone = plannedOnlyOn && cb && cb.checked;
           it.classList.toggle("hidden", !matchesSearch || hideBecauseDone);
         }
-
         for (const sec of sections){
           const visibleItems = $$(".item", sec).filter(x => !x.classList.contains("hidden"));
           sec.classList.toggle("hidden", visibleItems.length === 0);
         }
       }
-
       searchInput.addEventListener("input", applySearchFilter);
-
-      // quick focus with "/" like in some apps
       window.addEventListener("keydown", (e) => {
         if (e.key === "/" && document.activeElement !== searchInput){
           e.preventDefault();
@@ -870,8 +1004,169 @@
         }
       });
 
-      // Apply once to ensure consistent section visibility
+      // -------------------- SUPABASE --------------------
+      let supabase = null;
+      let currentUser = null;
+      let saveTimer = null;
+
+      function canUseSupabase(){
+        return SUPABASE_URL && SUPABASE_ANON_KEY &&
+               !SUPABASE_URL.includes("PASTE_") &&
+               !SUPABASE_ANON_KEY.includes("PASTE_");
+      }
+
+      async function initSupabase(){
+        if (!canUseSupabase()){
+          setStatus("Supabase keys missing — checkboxes locked (paste keys in HTML)", "warn");
+          lockCheckboxes(true);
+          return;
+        }
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Get existing session
+        const { data } = await supabase.auth.getSession();
+        currentUser = data?.session?.user || null;
+        await onAuthChanged(currentUser);
+
+        // Listen for auth changes
+        supabase.auth.onAuthStateChange(async (_event, session) => {
+          currentUser = session?.user || null;
+          await onAuthChanged(currentUser);
+        });
+      }
+
+      async function onAuthChanged(user){
+        if (!user){
+          setStatus("Not signed in — checkboxes locked", "warn");
+          loginBtn.style.display = "";
+          logoutBtn.style.display = "none";
+          lockCheckboxes(true);
+          // still show local backup state
+          applyStateToUI();
+          return;
+        }
+
+        setStatus(`Signed in: ${user.email} — saving enabled`, "ok");
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "";
+        lockCheckboxes(false);
+
+        // Load from Supabase (authoritative)
+        const remote = await loadProgressFromSupabase();
+        if (remote){
+          saved = remote;
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch(e){}
+        }
+        applyStateToUI();
+      }
+
+      async function loadProgressFromSupabase(){
+        try{
+          const { data, error } = await supabase
+            .from(TABLE)
+            .select("data")
+            .eq("user_id", currentUser.id)
+            .maybeSingle();
+
+          if (error) throw error;
+          if (!data || !data.data) return null;
+
+          // data.data is jsonb
+          if (typeof data.data === "object" && data.data !== null){
+            return data.data;
+          }
+          return null;
+        } catch (e){
+          setStatus("Signed in, but failed to load saved progress (check RLS/table). Using local backup.", "warn");
+          return null;
+        }
+      }
+
+      function scheduleSave(){
+        if (!currentUser || !supabase) return;
+        if (saveTimer) clearTimeout(saveTimer);
+        saveTimer = setTimeout(saveProgressToSupabase, SAVE_DEBOUNCE_MS);
+      }
+
+      async function saveProgressToSupabase(){
+        if (!currentUser || !supabase) return;
+        try{
+          // Upsert by user_id (make sure user_id is PRIMARY KEY in table)
+          const payload = {
+            user_id: currentUser.id,
+            data: saved,
+            updated_at: new Date().toISOString()
+          };
+
+          const { error } = await supabase
+            .from(TABLE)
+            .upsert(payload, { onConflict: "user_id" });
+
+          if (error) throw error;
+          setStatus(`Signed in: ${currentUser.email} — saved`, "ok");
+        } catch (e){
+          setStatus("Signed in, but failed to save (check table + RLS). Local backup still updated.", "warn");
+        }
+      }
+
+      // Auth UI events
+      loginBtn.addEventListener("click", showModal);
+      closeModalBtn.addEventListener("click", hideModal);
+      modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) hideModal(); });
+      clearCredsBtn.addEventListener("click", () => { emailInput.value=""; passInput.value=""; emailInput.focus(); });
+
+      doLoginBtn.addEventListener("click", async () => {
+        loginErr.style.display = "none";
+        loginErr.textContent = "";
+        if (!supabase){
+          loginErr.style.display = "block";
+          loginErr.textContent = "Supabase not initialized (paste keys in HTML).";
+          return;
+        }
+        const email = (emailInput.value || "").trim();
+        const password = passInput.value || "";
+        if (!email || !password){
+          loginErr.style.display = "block";
+          loginErr.textContent = "Enter email + password.";
+          return;
+        }
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error){
+          loginErr.style.display = "block";
+          loginErr.textContent = error.message;
+          return;
+        }
+        hideModal();
+      });
+
+      logoutBtn.addEventListener("click", async () => {
+        if (!supabase) return;
+        await supabase.auth.signOut();
+      });
+
+      // Checkbox listeners (always update local + visuals, only save to Supabase when signed in)
+      for (const it of $$(".item")){
+        const key = it.getAttribute("data-key");
+        const cb = $("input[type=checkbox]", it);
+        if (!key || !cb) continue;
+
+        cb.addEventListener("change", () => {
+          saved[key] = cb.checked;
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch(e){}
+          updateItemVisual(it, cb.checked);
+          updateCounts();
+          if (plannedOnlyOn) applyPlannedOnly(true);
+          applySearchFilter();
+          scheduleSave();
+        });
+      }
+
+      // Initial paint from local backup
+      applyStateToUI();
       applySearchFilter();
+
+      // Kick off Supabase
+      initSupabase();
     })();
   </script>
 </body>
