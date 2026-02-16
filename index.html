@@ -1,4 +1,4 @@
-<!doctype html><!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -189,5 +189,690 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.10);
       color: var(--muted);
-      background: rgba(255
+      background: rgba(255,255,255,.04);
+      white-space: nowrap;
+    }
+    .badge.good{
+      border-color: rgba(38,230,165,.25);
+      background: rgba(38,230,165,.08);
+      color: #bff8e6;
+    }
+    .badge.next{
+      border-color: rgba(255,211,106,.30);
+      background: rgba(255,211,106,.10);
+      color: #ffe7b0;
+    }
+    .badge.tag{
+      border-color: rgba(109,214,255,.25);
+      background: rgba(109,214,255,.08);
+      color: #c6f1ff;
+    }
+    .chev{
+      font-family: var(--mono);
+      color: rgba(255,255,255,.35);
+      font-size: 12px;
+    }
+    details[open] .chev{color: rgba(255,255,255,.55)}
+    .cardbody{
+      padding: 0 16px 14px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.10);
+    }
 
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display:grid;
+      gap: 8px;
+    }
+
+    /* checkbox rows */
+    .item{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+    }
+    .item:hover{
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .item input[type="checkbox"]{
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--good);
+      cursor:pointer;
+      flex: 0 0 auto;
+    }
+    .item .txt{
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.25rem;
+      flex: 1 1 auto;
+      min-width:0;
+    }
+    .item .txt code{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.25);
+      color: #d7e6ff;
+      white-space:nowrap;
+    }
+    .item.done{
+      opacity: .88;
+      border-color: rgba(38,230,165,.16);
+      background: rgba(38,230,165,.05);
+    }
+    .item.done .txt{
+      color: rgba(231,238,252,.82);
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+      text-decoration-color: rgba(255,255,255,.18);
+    }
+
+    .hint{
+      color: var(--muted2);
+      font-size: 12px;
+      margin: 10px 0 0;
+    }
+    .note{
+      color: var(--muted2);
+      font-size: 12px;
+      margin: 10px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer{
+      margin-top: 22px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.35);
+      font-size: 12px;
+      text-align:center;
+    }
+    .pillrow{
+      margin-top: 10px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.55);
+    }
+
+    /* hidden filtering */
+    .hidden{display:none !important}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>PYNDRYX — Master Feature Roadmap</h1>
+      <p class="sub">What’s built, what’s next, and what we’ll add later (15 phases + integrations + vision options).</p>
+      <div class="byline">A collaborative cyber-industrial systems project by Isaac D DePina &amp; Tyrien Jones</div>
+
+      <div class="chipbar" id="chipbar">
+        <span class="chip"><span class="dot"></span> <b id="doneCount">11</b> done</span>
+        <span class="chip"><span class="dot"></span> <b id="plannedCount">73</b> planned</span>
+        <span class="chip"><span class="dot"></span> <b>19</b> sections</span>
+        <span class="chip"><span class="dot"></span> Goal <b>safe-first repair automation</b></span>
+        <span class="chip"><span class="dot"></span> Audience <b>beginner → pro</b></span>
+      </div>
+
+      <div class="controls">
+        <div class="search" title="Search features">
+          <span style="opacity:.55; font-family:var(--mono); font-size:12px;">/</span>
+          <input id="searchInput" type="text" placeholder="Search features (e.g., diff, plugin, pytest, security, offline, telemetry)..." />
+        </div>
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+        <button class="btn primary" id="showPlannedOnly">Show planned only</button>
+        <button class="btn" id="showAll">Show all</button>
+      </div>
+    </header>
+
+    <!-- Top row: Current + Phase 1 (like your original layout) -->
+    <div class="grid two">
+      <details class="card section" data-section="current" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Current Features</div>
+            <span class="badge good">Already built</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="current-cli"><input type="checkbox"><div class="txt">CLI runner</div></li>
+            <li class="item" data-key="current-loop"><input type="checkbox"><div class="txt">Iteration repair loop</div></li>
+            <li class="item" data-key="current-timeout"><input type="checkbox"><div class="txt">Timeout control</div></li>
+            <li class="item" data-key="current-workdir"><input type="checkbox"><div class="txt">Workdir targeting</div></li>
+            <li class="item" data-key="current-mode"><input type="checkbox"><div class="txt">File mode / Command mode</div></li>
+            <li class="item" data-key="current-json"><input type="checkbox"><div class="txt">JSON report output</div></li>
+            <li class="item" data-key="current-editor"><input type="checkbox"><div class="txt">GUI: code editor panel + open/save</div></li>
+            <li class="item" data-key="current-stream"><input type="checkbox"><div class="txt">GUI: live output streaming + Stop button</div></li>
+            <li class="item" data-key="current-popups"><input type="checkbox"><div class="txt">GUI: error popups</div></li>
+            <li class="item" data-key="current-theme"><input type="checkbox"><div class="txt">GUI: dark/light theme toggle</div></li>
+            <li class="item" data-key="current-stubs"><input type="checkbox"><div class="txt">AI + non-AI repair are currently placeholders (stubs)</div></li>
+          </ul>
+          <div class="hint">Resume angle: “I built the UI + runner loop + reporting foundation; next is safe-first + project-wide operation.”</div>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase1" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 1 — Essential</div>
+            <span class="badge next">Build next</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p1-safe"><input type="checkbox"><div class="txt">Safe patch system: snapshot + diff preview + approve/reject + rollback</div></li>
+            <li class="item" data-key="p1-project"><input type="checkbox"><div class="txt">Project mode: run a whole folder (entrypoints + <code>pytest</code>)</div></li>
+            <li class="item" data-key="p1-multifile"><input type="checkbox"><div class="txt">Multi-file repair cycles (track changes across files per iteration)</div></li>
+            <li class="item" data-key="p1-smartfix"><input type="checkbox"><div class="txt">Smart fixers before AI: <code>ruff</code>, <code>black</code>, import fixes, <code>mypy</code>, syntax pass</div></li>
+            <li class="item" data-key="p1-deps"><input type="checkbox"><div class="txt">Dependency detection (missing packages, pip checks)</div></li>
+          </ul>
+          <details style="margin-top:10px;">
+            <summary style="padding:10px 0; border:none; background:none;">
+              <span class="badge tag">Why this phase matters</span>
+            </summary>
+            <div class="hint">
+              This is the “trust layer”: before AI touches code, you always have a safe snapshot, a reviewable diff, and a one-click rollback path.
+              It also unlocks project-wide repairs instead of single-file band-aids.
+            </div>
+          </details>
+        </div>
+      </details>
+    </div>
+
+    <!-- Phase 2..15 -->
+    <div class="grid">
+      <details class="card section" data-section="phase2" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 2 — Advanced Capabilities</div>
+            <span class="badge next">Power</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p2-engine"><input type="checkbox"><div class="txt">Real AI repair engine (traceback → context → minimal patch → validate)</div></li>
+            <li class="item" data-key="p2-plugin"><input type="checkbox"><div class="txt">Plugin architecture (custom fixers, language modules, external tool injection)</div></li>
+            <li class="item" data-key="p2-score"><input type="checkbox"><div class="txt">Patch scoring (prefer smallest diff that passes validators)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase3" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 3 — Professional Tooling</div>
+            <span class="badge next">Polish</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p3-terminal"><input type="checkbox"><div class="txt">Built-in terminal panel</div></li>
+            <li class="item" data-key="p3-explorer"><input type="checkbox"><div class="txt">Project file explorer (tree + click to open)</div></li>
+            <li class="item" data-key="p3-syntax"><input type="checkbox"><div class="txt">Syntax highlighting (Python first)</div></li>
+            <li class="item" data-key="p3-tests"><input type="checkbox"><div class="txt">Embedded test runner</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase4" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 4 — Intelligence Layer</div>
+            <span class="badge next">Smart</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p4-panel"><input type="checkbox"><div class="txt">Error intelligence panel (type, explanation, risk level, strategy)</div></li>
+            <li class="item" data-key="p4-learning"><input type="checkbox"><div class="txt">Learning system (track frequent errors/fixes, adapt strategy)</div></li>
+            <li class="item" data-key="p4-stop"><input type="checkbox"><div class="txt">“Stop conditions” (detect looping failures and recommend manual review)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase5" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 5 — User Experience Tiers</div>
+            <span class="badge next">Beginner → Pro</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p5-beginner"><input type="checkbox"><div class="txt">Beginner mode: one-click “Fix Project” + simple explanations</div></li>
+            <li class="item" data-key="p5-intermediate"><input type="checkbox"><div class="txt">Intermediate: show iterations + diffs + rollback</div></li>
+            <li class="item" data-key="p5-advanced"><input type="checkbox"><div class="txt">Advanced: strategy selection + plugin manager + language switching</div></li>
+            <li class="item" data-key="p5-presets"><input type="checkbox"><div class="txt">Theme presets per skill level (novice / builder / pro)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase6" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 6 — Safety &amp; Governance</div>
+            <span class="badge next">Guardrails</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p6-budgets"><input type="checkbox"><div class="txt">Change budgets (max files touched, max lines changed, max iterations)</div></li>
+            <li class="item" data-key="p6-hunks"><input type="checkbox"><div class="txt">Per-hunk approvals (accept/reject individual diff chunks)</div></li>
+            <li class="item" data-key="p6-dryrun"><input type="checkbox"><div class="txt">Dry-run mode (generate patches + reports without writing files)</div></li>
+            <li class="item" data-key="p6-presets"><input type="checkbox"><div class="txt">Safety policy presets: <code>safe</code> / <code>balanced</code> / <code>aggressive</code></div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase7" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 7 — Reproducible Environments</div>
+            <span class="badge next">Reliable</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p7-venv"><input type="checkbox"><div class="txt">Auto-detect + offer venv creation and activation instructions</div></li>
+            <li class="item" data-key="p7-snapshot"><input type="checkbox"><div class="txt">Capture environment snapshot (<code>python -V</code>, <code>pip freeze</code>, OS info)</div></li>
+            <li class="item" data-key="p7-determinism"><input type="checkbox"><div class="txt">Deterministic runs (store commands + args + workdir per session)</div></li>
+            <li class="item" data-key="p7-cache"><input type="checkbox"><div class="txt">Cache artifacts (logs, diffs, reports) per run</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase8" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 8 — Validation Pipeline</div>
+            <span class="badge next">Proof</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p8-unified"><input type="checkbox"><div class="txt">Unified validator runner (lint → typecheck → tests → security)</div></li>
+            <li class="item" data-key="p8-dod"><input type="checkbox"><div class="txt">Definition of Done gate (must pass selected validators to mark success)</div></li>
+            <li class="item" data-key="p8-threshold"><input type="checkbox"><div class="txt">Configurable thresholds (e.g., coverage only if tests exist)</div></li>
+            <li class="item" data-key="p8-summary"><input type="checkbox"><div class="txt">Validator summaries in the final report (what ran, what failed, why)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase9" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 9 — Diff &amp; Review UX</div>
+            <span class="badge next">Transparency</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p9-viewer"><input type="checkbox"><div class="txt">Side-by-side diff viewer (inline + split view)</div></li>
+            <li class="item" data-key="p9-annotate"><input type="checkbox"><div class="txt">Annotate diffs with “why this changed” notes</div></li>
+            <li class="item" data-key="p9-queue"><input type="checkbox"><div class="txt">Review queue (stage multiple patches, approve in order)</div></li>
+            <li class="item" data-key="p9-rollback"><input type="checkbox"><div class="txt">Quick rollback from the UI (one-click revert to snapshot)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase10" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 10 — Git Integration</div>
+            <span class="badge next">Audit</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p10-branch"><input type="checkbox"><div class="txt">“Session branch” mode (create branch automatically for fixes)</div></li>
+            <li class="item" data-key="p10-commit"><input type="checkbox"><div class="txt">Commit-per-iteration (clean history + easy rollback)</div></li>
+            <li class="item" data-key="p10-export"><input type="checkbox"><div class="txt">Export patches (<code>.patch</code>) + release notes summary</div></li>
+            <li class="item" data-key="p10-dirty"><input type="checkbox"><div class="txt">Auto-detect uncommitted changes and warn before modifying</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase11" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 11 — Performance &amp; Scalability</div>
+            <span class="badge next">Fast</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p11-queue"><input type="checkbox"><div class="txt">Job queue for repairs (multiple targets, scheduled runs)</div></li>
+            <li class="item" data-key="p11-parallel"><input type="checkbox"><div class="txt">Parallel validators where safe (e.g., lint + typecheck)</div></li>
+            <li class="item" data-key="p11-incremental"><input type="checkbox"><div class="txt">Incremental analysis (only re-check touched files when possible)</div></li>
+            <li class="item" data-key="p11-limits"><input type="checkbox"><div class="txt">Resource limits (CPU/mem caps, smart timeouts, cancellation)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase12" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 12 — Observability &amp; Reporting</div>
+            <span class="badge next">Track</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p12-timeline"><input type="checkbox"><div class="txt">Session timeline (every action recorded as events)</div></li>
+            <li class="item" data-key="p12-export"><input type="checkbox"><div class="txt">Report export: JSON + HTML + Markdown bundle</div></li>
+            <li class="item" data-key="p12-metrics"><input type="checkbox"><div class="txt">Metrics: iterations, patch sizes, pass rate, top error types</div></li>
+            <li class="item" data-key="p12-cluster"><input type="checkbox"><div class="txt">Failure clustering across runs (group repeating issues)</div></li>
+            <li class="item" data-key="p12-telemetry"><input type="checkbox"><div class="txt">Opt-in telemetry dashboard (aggregate performance + common failures)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase13" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 13 — Security Hardening</div>
+            <span class="badge next">Secure</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p13-scanners"><input type="checkbox"><div class="txt">Add security scanners (<code>bandit</code>, <code>pip-audit</code>, optional <code>semgrep</code>)</div></li>
+            <li class="item" data-key="p13-sandbox"><input type="checkbox"><div class="txt">Sandbox execution options (restricted subprocess policies)</div></li>
+            <li class="item" data-key="p13-secrets"><input type="checkbox"><div class="txt">Secret detection (warn if keys/tokens appear in diffs)</div></li>
+            <li class="item" data-key="p13-path"><input type="checkbox"><div class="txt">Path-safety checks (avoid writing outside project root)</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase14" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 14 — Multi-Language Expansion</div>
+            <span class="badge next">Beyond Python</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p14-adapter"><input type="checkbox"><div class="txt">Language adapter interface (common runner + validators + patching)</div></li>
+            <li class="item" data-key="p14-node"><input type="checkbox"><div class="txt">Node/TS: ESLint + Prettier + test runner integration</div></li>
+            <li class="item" data-key="p14-rust"><input type="checkbox"><div class="txt">Rust: <code>cargo check</code> + <code>clippy</code> integration</div></li>
+            <li class="item" data-key="p14-cppjava"><input type="checkbox"><div class="txt">C++ / Java: clang-tidy + Maven/Gradle build/test hooks</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="phase15" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Phase 15 — Enterprise Readiness</div>
+            <span class="badge next">Teams</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="p15-rbac"><input type="checkbox"><div class="txt">Role-based access (who can apply patches vs. preview only)</div></li>
+            <li class="item" data-key="p15-templates"><input type="checkbox"><div class="txt">Policy templates (org-wide safety presets and validator rules)</div></li>
+            <li class="item" data-key="p15-ci"><input type="checkbox"><div class="txt">CI integration modes (GitHub Actions / GitLab pipelines)</div></li>
+            <li class="item" data-key="p15-audit"><input type="checkbox"><div class="txt">Audit logs + exportable compliance reports</div></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="card section" data-section="integrations" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Integrations to Inject</div>
+            <span class="badge next">Tooling</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="int-format"><input type="checkbox"><div class="txt">Formatting: Black, Ruff, autopep8</div></li>
+            <li class="item" data-key="int-static"><input type="checkbox"><div class="txt">Static analysis: mypy, pylint, bandit</div></li>
+            <li class="item" data-key="int-testing"><input type="checkbox"><div class="txt">Testing: pytest, coverage</div></li>
+            <li class="item" data-key="int-deps"><input type="checkbox"><div class="txt">Dependencies: pip check, pipdeptree, Poetry support</div></li>
+            <li class="item" data-key="int-future"><input type="checkbox"><div class="txt">Future languages: Node (ESLint/Prettier), C++ (clang-tidy), Rust (cargo check), Java (Maven/Gradle)</div></li>
+          </ul>
+          <div class="note">Optional “nice-to-have” tooling later</div>
+        </div>
+      </details>
+
+      <details class="card section" data-section="vision" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Vision Options</div>
+            <span class="badge tag">Pick a direction</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="v-a"><input type="checkbox"><div class="txt">A) AI Debug Assistant</div></li>
+            <li class="item" data-key="v-b"><input type="checkbox"><div class="txt">B) Automated Stability Engine</div></li>
+            <li class="item" data-key="v-c"><input type="checkbox"><div class="txt">C) AI IDE Replacement</div></li>
+            <li class="item" data-key="v-d"><input type="checkbox"><div class="txt">D) Cross-language Auto-Repair Platform</div></li>
+          </ul>
+          <div class="hint">Tip: If you want “super advanced” without being scary, build Phase 1 (safe patch + diffs + project mode) first.</div>
+        </div>
+      </details>
+
+      <details class="card section" data-section="resume" open>
+        <summary>
+          <div class="cardhead">
+            <div class="title">Resume / Portfolio Proof Points</div>
+            <span class="badge tag">Showcase</span>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="cardbody">
+          <ul class="list">
+            <li class="item" data-key="r-cases"><input type="checkbox"><div class="txt">3 case studies (bug → fix loop → validation → report bundle)</div></li>
+            <li class="item" data-key="r-demo"><input type="checkbox"><div class="txt">Short demo GIF: “diff preview → approve → tests pass → rollback”</div></li>
+            <li class="item" data-key="r-readme"><input type="checkbox"><div class="txt">README: architecture diagram + roadmap + “how it works”</div></li>
+            <li class="item" data-key="r-metrics"><input type="checkbox"><div class="txt">Metrics: average iterations, patch size, pass rate, common error types</div></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="footer">
+      © <span id="year"></span> <b>PYNDRYX</b> — Built as a cyber-industrial repair intelligence system.
+      <div class="pillrow">
+        <span class="pill">Isaac D DePina</span>
+        <span class="pill">Tyrien Jones</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const $ = (q, el=document)=>el.querySelector(q);
+      const $$ = (q, el=document)=>Array.from(el.querySelectorAll(q));
+
+      // Year
+      $("#year").textContent = new Date().getFullYear();
+
+      // Persisted checkbox state
+      const STORAGE_KEY = "pyndryx_roadmap_checks_v1";
+      const saved = (() => {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+        catch { return {}; }
+      })();
+
+      // Default: mark "Current Features" as checked if nothing saved yet
+      const hasAnySaved = Object.keys(saved).length > 0;
+
+      const items = $$(".item");
+      for (const it of items){
+        const key = it.getAttribute("data-key");
+        const cb = $("input[type=checkbox]", it);
+        if (!key || !cb) continue;
+
+        if (saved[key] !== undefined){
+          cb.checked = !!saved[key];
+        } else if (!hasAnySaved && key.startsWith("current-")){
+          cb.checked = true;
+        }
+
+        updateItemVisual(it, cb.checked);
+
+        cb.addEventListener("change", () => {
+          saved[key] = cb.checked;
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch(e){}
+          updateItemVisual(it, cb.checked);
+          updateCounts();
+          if (plannedOnlyOn) applyPlannedOnly(true);
+          applySearchFilter();
+        });
+      }
+
+      function updateItemVisual(itemEl, isDone){
+        itemEl.classList.toggle("done", !!isDone);
+      }
+
+      // Counts
+      const doneEl = $("#doneCount");
+      const plannedEl = $("#plannedCount");
+
+      function updateCounts(){
+        const all = $$(".item input[type=checkbox]");
+        const done = all.filter(cb => cb.checked).length;
+        const planned = all.length - done;
+        doneEl.textContent = String(done);
+        plannedEl.textContent = String(planned);
+      }
+      updateCounts();
+
+      // Expand/collapse all
+      const sections = $$(".section");
+      $("#expandAll").addEventListener("click", () => {
+        for (const s of sections) s.open = true;
+      });
+      $("#collapseAll").addEventListener("click", () => {
+        for (const s of sections) s.open = false;
+        window.scrollTo({top:0, behavior:"smooth"});
+      });
+
+      // Planned-only toggle
+      let plannedOnlyOn = false;
+
+      function applyPlannedOnly(on){
+        plannedOnlyOn = on;
+        const btn = $("#showPlannedOnly");
+        btn.classList.toggle("toggle-on", on);
+
+        for (const it of $$(".item")){
+          const cb = $("input[type=checkbox]", it);
+          const matchesSearch = !it.classList.contains("search-hidden");
+          const hideBecauseDone = on && cb && cb.checked;
+          it.classList.toggle("hidden", hideBecauseDone || !matchesSearch);
+        }
+        // hide whole sections if all items hidden
+        for (const sec of sections){
+          const visibleItems = $$(".item", sec).filter(x => !x.classList.contains("hidden"));
+          sec.classList.toggle("hidden", visibleItems.length === 0);
+        }
+      }
+
+      $("#showPlannedOnly").addEventListener("click", () => {
+        applyPlannedOnly(!plannedOnlyOn);
+      });
+
+      $("#showAll").addEventListener("click", () => {
+        plannedOnlyOn = false;
+        $("#showPlannedOnly").classList.remove("toggle-on");
+        for (const sec of sections) sec.classList.remove("hidden");
+        for (const it of $$(".item")){
+          it.classList.remove("hidden");
+          it.classList.remove("search-hidden");
+        }
+        $("#searchInput").value = "";
+      });
+
+      // Search filter (hides list items + empty sections)
+      const searchInput = $("#searchInput");
+      function normalize(s){ return (s||"").toLowerCase().trim(); }
+
+      function applySearchFilter(){
+        const q = normalize(searchInput.value);
+
+        for (const it of $$(".item")){
+          const text = normalize(it.innerText);
+          const hit = !q || text.includes(q);
+          it.classList.toggle("search-hidden", !hit);
+        }
+
+        // Now combine with planned-only state:
+        for (const it of $$(".item")){
+          const cb = $("input[type=checkbox]", it);
+          const matchesSearch = !it.classList.contains("search-hidden");
+          const hideBecauseDone = plannedOnlyOn && cb && cb.checked;
+          it.classList.toggle("hidden", !matchesSearch || hideBecauseDone);
+        }
+
+        for (const sec of sections){
+          const visibleItems = $$(".item", sec).filter(x => !x.classList.contains("hidden"));
+          sec.classList.toggle("hidden", visibleItems.length === 0);
+        }
+      }
+
+      searchInput.addEventListener("input", applySearchFilter);
+
+      // quick focus with "/" like in some apps
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "/" && document.activeElement !== searchInput){
+          e.preventDefault();
+          searchInput.focus();
+        }
+        if (e.key === "Escape" && document.activeElement === searchInput){
+          searchInput.value = "";
+          applySearchFilter();
+          searchInput.blur();
+        }
+      });
+
+      // Apply once to ensure consistent section visibility
+      applySearchFilter();
+    })();
+  </script>
+</body>
+</html>
