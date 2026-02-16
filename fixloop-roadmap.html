@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FixLoop Studio — Master Roadmap</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#121a24; --text:#e9eef5; --muted:#a9b6c7;
+      --accent:#3a86ff; --ok:#20c997; --todo:#ffb703; --line:#1e2a3a;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:var(--sans); }
+    header{ padding:28px 18px 14px; max-width:1100px; margin:0 auto; }
+    h1{ margin:0 0 6px; font-size:28px; }
+    p{ margin:0; color:var(--muted); }
+    .wrap{ max-width:1100px; margin:0 auto; padding:16px 18px 60px; }
+    .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 18px; }
+    .btn{
+      border:1px solid var(--line); background:transparent; color:var(--text);
+      padding:8px 10px; border-radius:10px; cursor:pointer;
+    }
+    .btn:hover{ border-color:var(--accent); }
+    input[type="search"]{
+      flex:1; min-width:240px; padding:10px 12px; border-radius:12px;
+      border:1px solid var(--line); background:#0f1620; color:var(--text);
+      outline:none;
+    }
+    .grid{ display:grid; grid-template-columns:repeat(12, 1fr); gap:14px; }
+    .card{
+      grid-column: span 12;
+      background:var(--card); border:1px solid var(--line); border-radius:14px;
+      padding:14px 14px 10px;
+    }
+    @media (min-width: 900px){
+      .card.half{ grid-column: span 6; }
+    }
+    h2{ margin:0 0 10px; font-size:18px; display:flex; align-items:center; gap:10px; }
+    .tag{ font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); }
+    ul{ margin:0; padding:0 0 0 18px; }
+    li{ margin:8px 0; }
+    .check{ font-family:var(--mono); }
+    .done{ color:var(--ok); }
+    .todo{ color:var(--todo); }
+    details{ border-top:1px solid var(--line); margin-top:10px; padding-top:10px; }
+    summary{ cursor:pointer; color:var(--muted); }
+    .small{ font-size:12px; color:var(--muted); }
+    code{ font-family:var(--mono); background:#0f1620; padding:2px 6px; border-radius:8px; border:1px solid var(--line); }
+    .footer{ margin-top:22px; color:var(--muted); font-size:12px; }
+    .hide{ display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FixLoop Studio — Master Feature Roadmap</h1>
+    <p>Checklist of what’s built, what’s next, and what to add later (beginner → advanced friendly).</p>
+  </header>
+
+  <div class="wrap">
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Search features (e.g., diff, plugin, pytest, dark mode)…" />
+      <button class="btn" id="expand">Expand all</button>
+      <button class="btn" id="collapse">Collapse all</button>
+    </div>
+
+    <div class="grid" id="cards">
+
+      <section class="card half" data-text="current features built cli runner iteration loop timeout workdir file mode cmd mode json report gui editor open save mode selector iterations timeout workdir output stop error popups dark light theme toggle">
+        <h2>Current Features <span class="tag">Already built</span></h2>
+        <ul>
+          <li><span class="check done">[✓]</span> CLI runner</li>
+          <li><span class="check done">[✓]</span> Iteration repair loop</li>
+          <li><span class="check done">[✓]</span> Timeout control</li>
+          <li><span class="check done">[✓]</span> Workdir targeting</li>
+          <li><span class="check done">[✓]</span> File mode / Command mode</li>
+          <li><span class="check done">[✓]</span> JSON report output</li>
+          <li><span class="check done">[✓]</span> GUI: code editor panel + open/save</li>
+          <li><span class="check done">[✓]</span> GUI: live output streaming + Stop button</li>
+          <li><span class="check done">[✓]</span> GUI: error popups</li>
+          <li><span class="check done">[✓]</span> GUI: dark/light theme toggle</li>
+          <li><span class="check done">[✓]</span> AI + non‑AI repair are currently placeholders (stubs)</li>
+        </ul>
+      </section>
+
+      <section class="card half" data-text="phase 1 essential must build next safe patch system snapshot diff preview approve reject rollback project mode folder entrypoints pytest multi-file fix cycles smart fixers ruff black imports mypy syntax dependency detection">
+        <h2>Phase 1 — Essential <span class="tag">Build next</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Safe patch system: snapshot + diff preview + approve/reject + rollback</li>
+          <li><span class="check todo">[ ]</span> Project mode: run a whole folder (entrypoints + <code>pytest</code>)</li>
+          <li><span class="check todo">[ ]</span> Multi‑file repair cycles</li>
+          <li><span class="check todo">[ ]</span> Smart fixers before AI: <code>ruff</code>, <code>black</code>, import fixes, <code>mypy</code>, syntax pass</li>
+          <li><span class="check todo">[ ]</span> Dependency detection (missing packages, pip checks)</li>
+        </ul>
+        <details>
+          <summary>Why this phase matters</summary>
+          <p class="small">This is the foundation that makes FixLoop safe + useful for real projects (and not scary to novices).</p>
+        </details>
+      </section>
+
+      <section class="card" data-text="phase 2 advanced real ai repair engine traceback context minimal patch validation plugin architecture custom fixers language modules external tools">
+        <h2>Phase 2 — Advanced Capabilities <span class="tag">Power</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Real AI repair engine (traceback → context → minimal patch → validate)</li>
+          <li><span class="check todo">[ ]</span> Plugin architecture (custom fixers, language modules, external tool injection)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 3 professional tooling terminal panel project explorer syntax highlighting tabs embedded test runner">
+        <h2>Phase 3 — Professional Tooling <span class="tag">Polish</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Built‑in terminal panel</li>
+          <li><span class="check todo">[ ]</span> Project file explorer (tree + click to open)</li>
+          <li><span class="check todo">[ ]</span> Syntax highlighting (Python first)</li>
+          <li><span class="check todo">[ ]</span> Tabbed file editing</li>
+          <li><span class="check todo">[ ]</span> Embedded test runner</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 4 intelligence error intelligence panel classify error explain risk strategy learning system frequent errors fixes adaptive strategy">
+        <h2>Phase 4 — Intelligence Layer <span class="tag">Smart</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Error intelligence panel (type, explanation, risk level, strategy)</li>
+          <li><span class="check todo">[ ]</span> Learning system (track frequent errors/fixes, adapt strategy)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 5 user experience tiers beginner mode one click fix project simple explanations intermediate show diffs rollback advanced plugins language switching themes">
+        <h2>Phase 5 — User Experience Tiers <span class="tag">Beginner → Pro</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Beginner mode: one‑click “Fix Project” + simple explanations</li>
+          <li><span class="check todo">[ ]</span> Intermediate: show iterations + diffs + rollback</li>
+          <li><span class="check todo">[ ]</span> Advanced: strategy selection + plugin manager + language switching</li>
+          <li><span class="check todo">[ ]</span> Theme presets per skill level (novice / builder / pro)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="integrations formatting black ruff autopep8 analysis mypy pylint bandit testing pytest coverage dependency pip check pipdeptree poetry multi language node eslint prettier c++ clang tidy rust cargo check java maven gradle">
+        <h2>Integrations to Inject <span class="tag">Tooling</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Formatting: Black, Ruff, autopep8</li>
+          <li><span class="check todo">[ ]</span> Static analysis: mypy, pylint, bandit</li>
+          <li><span class="check todo">[ ]</span> Testing: pytest, coverage</li>
+          <li><span class="check todo">[ ]</span> Dependencies: pip check, pipdeptree, Poetry support</li>
+          <li><span class="check todo">[ ]</span> Future languages: Node (ESLint/Prettier), C++ (clang-tidy), Rust (cargo check), Java (Maven/Gradle)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="vision options ai debug assistant stability engine ai ide replacement cross language auto repair platform">
+        <h2>Vision Options <span class="tag">Pick a direction</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> A) AI Debug Assistant</li>
+          <li><span class="check todo">[ ]</span> B) Automated Stability Engine</li>
+          <li><span class="check todo">[ ]</span> C) AI IDE Replacement</li>
+          <li><span class="check todo">[ ]</span> D) Cross‑language Auto‑Repair Platform</li>
+        </ul>
+        <p class="footer">Tip: If you want “super advanced” without being scary, build Phase 1 (safe patch + diffs + project mode) first.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const q = document.getElementById('q');
+    const cards = [...document.querySelectorAll('[data-text]')];
+    const details = [...document.querySelectorAll('details')];
+
+    function filter() {
+      const s = q.value.trim().toLowerCase();
+      cards.forEach(c => {
+        const t = (c.getAttribute('data-text') || '').toLowerCase();
+        c.classList.toggle('hide', s && !t.includes(s));
+      });
+    }
+    q.addEventListener('input', filter);
+
+    document.getElementById('expand').addEventListener('click', () => {
+      details.forEach(d => d.open = true);
+    });
+    document.getElementById('collapse').addEventListener('click', () => {
+      details.forEach(d => d.open = false);
+    });
+  </script>
+</body>
+</html>
