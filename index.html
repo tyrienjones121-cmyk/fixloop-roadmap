@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FixLoop Studio — Master Roadmap</title>
+  <title>FixLoop Studio — Master Feature Roadmap (Resume Edition)</title>
+  <meta name="description" content="FixLoop Studio roadmap: 15 phases from essentials to enterprise-grade automation, plus integrations and vision options." />
   <style>
     :root{
       --bg:#0b0f14; --card:#121a24; --text:#e9eef5; --muted:#a9b6c7;
@@ -12,17 +13,81 @@
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
       --shadow: 0 10px 30px rgba(0,0,0,.28);
     }
-
     *{ box-sizing:border-box; }
-    body{ margin:0; background:radial-gradient(1200px 600px at 20% 0%, rgba(58,134,255,.14), transparent 60%), var(--bg); color:var(--text); font-family:var(--sans); }
+    body{
+      margin:0;
+      background:
+        radial-gradient(1100px 520px at 18% 0%, rgba(58,134,255,.14), transparent 62%),
+        radial-gradient(900px 500px at 88% 12%, rgba(32,201,151,.10), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.35;
+    }
     a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:underline; }
-
-    header{ padding:28px 18px 14px; max-width:1100px; margin:0 auto; }
+    header{ padding:28px 18px 14px; max-width:1150px; margin:0 auto; }
     h1{ margin:0 0 6px; font-size:28px; letter-spacing:.2px; }
     p{ margin:0; color:var(--muted); }
+    .wrap{ max-width:1150px; margin:0 auto; padding:16px 18px 64px; }
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin:14px 0 18px;
+    }
+    input[type="search"]{
+      flex:1; min-width:240px; padding:10px 12px; border-radius:12px;
+      border:1px solid var(--line); background:#0f1620; color:var(--text);
+      outline:none;
+    }
+    .btn{
+      border:1px solid var(--line); background:transparent; color:var(--text);
+      padding:8px 10px; border-radius:10px; cursor:pointer;
+    }
+    .btn:hover{ border-color:var(--accent); }
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(58,134,255,.20), rgba(58,134,255,.06));
+      border-color:rgba(58,134,255,.55);
+    }
+    .grid{ display:grid; grid-template-columns:repeat(12, 1fr); gap:14px; }
+    .card{
+      grid-column: span 12;
+      background:linear-gradient(180deg, rgba(18,26,36,.92), rgba(18,26,36,.78));
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px 14px 10px;
+      box-shadow:var(--shadow);
+    }
+    @media (min-width: 980px){
+      .card.half{ grid-column: span 6; }
+    }
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tag{
+      font-size:12px; padding:4px 8px; border-radius:999px;
+      border:1px solid var(--line); color:var(--muted);
+      background:rgba(15,22,32,.45);
+    }
+    .tag.ok{ border-color:rgba(32,201,151,.55); color:rgba(210,255,242,.92); background:rgba(32,201,151,.08); }
+    .tag.todo{ border-color:rgba(255,183,3,.55); color:rgba(255,235,195,.92); background:rgba(255,183,3,.08); }
+    .tag.accent{ border-color:rgba(58,134,255,.55); color:rgba(200,220,255,.92); background:rgba(58,134,255,.08); }
 
-    .wrap{ max-width:1100px; margin:0 auto; padding:16px 18px 60px; }
+    ul{ margin:0; padding:0 0 0 18px; }
+    li{ margin:8px 0; }
+    .check{ font-family:var(--mono); }
+    .done{ color:var(--ok); }
+    .todo{ color:var(--todo); }
+
+    details{ border-top:1px solid var(--line); margin-top:10px; padding-top:10px; }
+    summary{ cursor:pointer; color:var(--muted); }
+    summary:hover{ color:var(--text); }
+    .small{ font-size:12px; color:var(--muted); }
+    code{ font-family:var(--mono); background:#0f1620; padding:2px 6px; border-radius:8px; border:1px solid var(--line); }
 
     .hero{
       display:flex; gap:14px; flex-wrap:wrap; align-items:stretch;
@@ -42,60 +107,6 @@
       font-size:12px;
     }
     .kpi b{ color:var(--text); font-weight:650; }
-
-    .toolbar{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin:14px 0 18px;
-    }
-    .btn{
-      border:1px solid var(--line); background:transparent; color:var(--text);
-      padding:8px 10px; border-radius:10px; cursor:pointer;
-    }
-    .btn:hover{ border-color:var(--accent); }
-    .btn.primary{
-      background:linear-gradient(180deg, rgba(58,134,255,.20), rgba(58,134,255,.06));
-      border-color:rgba(58,134,255,.55);
-    }
-
-    input[type="search"]{
-      flex:1; min-width:240px; padding:10px 12px; border-radius:12px;
-      border:1px solid var(--line); background:#0f1620; color:var(--text);
-      outline:none;
-    }
-
-    .grid{ display:grid; grid-template-columns:repeat(12, 1fr); gap:14px; }
-
-    .card{
-      grid-column: span 12;
-      background:linear-gradient(180deg, rgba(18,26,36,.92), rgba(18,26,36,.78));
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px 14px 10px;
-      box-shadow:var(--shadow);
-    }
-    @media (min-width: 900px){
-      .card.half{ grid-column: span 6; }
-    }
-
-    h2{ margin:0 0 10px; font-size:18px; display:flex; align-items:center; gap:10px; }
-    .tag{ font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); }
-    .tag.accent{ border-color:rgba(58,134,255,.55); color:rgba(200,220,255,.92); background:rgba(58,134,255,.08); }
-    .tag.ok{ border-color:rgba(32,201,151,.55); color:rgba(210,255,242,.92); background:rgba(32,201,151,.08); }
-    .tag.todo{ border-color:rgba(255,183,3,.55); color:rgba(255,235,195,.92); background:rgba(255,183,3,.08); }
-
-    ul{ margin:0; padding:0 0 0 18px; }
-    li{ margin:8px 0; line-height:1.25rem; }
-
-    .check{ font-family:var(--mono); }
-    .done{ color:var(--ok); }
-    .todo{ color:var(--todo); }
-
-    details{ border-top:1px solid var(--line); margin-top:10px; padding-top:10px; }
-    summary{ cursor:pointer; color:var(--muted); }
-    summary:hover{ color:var(--text); }
-
-    .small{ font-size:12px; color:var(--muted); }
-    code{ font-family:var(--mono); background:#0f1620; padding:2px 6px; border-radius:8px; border:1px solid var(--line); }
 
     .note{
       display:flex; gap:10px; align-items:flex-start;
@@ -121,43 +132,41 @@
       color:var(--muted);
       font-size:12px;
     }
-    .credits{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
+    .credits{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .credits .name{
       padding:6px 10px;
       border:1px solid var(--line);
       border-radius:999px;
-      background:rgba(15,22,32,.6);
+      background:rgba(15,22,32,.55);
       color:var(--muted);
       letter-spacing:.2px;
+      font-size:12px;
     }
     .credits .sep{ opacity:.45; }
     .hide{ display:none; }
 
-    /* Subtle accessibility */
     :focus-visible{ outline:2px solid rgba(58,134,255,.65); outline-offset:2px; border-radius:10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>FixLoop Studio — Master Feature Roadmap</h1>
-    <p>Checklist of what’s built, what’s next, and what to add later (beginner → advanced friendly).</p>
+    <p>What’s built, what’s next, and what we’ll add later (15 phases + integrations + vision options).</p>
 
     <div class="hero">
-      <div class="pill" aria-label="Project summary">
+      <div class="pill" aria-label="Roadmap summary">
         <span class="kpi"><b id="kDone">0</b> done</span>
         <span class="kpi"><b id="kTodo">0</b> planned</span>
-        <span class="kpi"><b id="kPhases">0</b> sections</span>
-        <span class="kpi"><b>Focus</b> safety-first automation</span>
-        <span class="kpi"><b>Style</b> minimal / pro</span>
+        <span class="kpi"><b id="kCards">0</b> sections</span>
+        <span class="kpi"><b>Goal</b> safe-first repair automation</span>
+        <span class="kpi"><b>Audience</b> beginner → pro</span>
       </div>
     </div>
   </header>
 
   <div class="wrap">
     <div class="toolbar">
-      <input id="q" type="search" placeholder="Search features (e.g., diff, plugin, pytest, dark mode)…" />
+      <input id="q" type="search" placeholder="Search features (e.g., diff, plugin, pytest, security, offline, telemetry)…" />
       <button class="btn" id="expand">Expand all</button>
       <button class="btn" id="collapse">Collapse all</button>
       <button class="btn primary" id="showPlanned">Show planned only</button>
@@ -166,37 +175,7 @@
 
     <div class="grid" id="cards">
 
-      <!-- NEW: North Star / Objective -->
-      <section class="card half" data-text="north star goal objective principles safety first minimal patches validate rollback novices friendly transparent diffs deterministic tools">
-        <h2>North Star <span class="tag accent">Purpose</span></h2>
-        <ul>
-          <li><span class="check done">[✓]</span> Transparent repairs: every change is visible, reviewable, reversible</li>
-          <li><span class="check done">[✓]</span> Beginner-friendly defaults (safe, minimal, explainable)</li>
-          <li><span class="check todo">[ ]</span> “Always validate” rule (tests / lint / syntax) before marking a fix as successful</li>
-          <li><span class="check todo">[ ]</span> Risk-aware strategies (low-risk first, escalate only when needed)</li>
-        </ul>
-        <div class="note"><span class="dot"></span><div>Design principle: FixLoop should feel like “Git + guardrails + brains”, not “mystery button that edits your code”.</div></div>
-      </section>
-
-      <!-- NEW: Architecture Overview -->
-      <section class="card half" data-text="architecture overview components runner fix loop validators patch manager diff viewer snapshot rollback strategy engine events logging telemetry">
-        <h2>Architecture Overview <span class="tag accent">Blueprint</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Core modules: Runner, Patch Manager, Validators, Strategies, UI</li>
-          <li><span class="check todo">[ ]</span> Event stream: step-by-step actions (run, detect, patch, validate)</li>
-          <li><span class="check todo">[ ]</span> Pluggable validators (lint/test/security) with a unified result format</li>
-          <li><span class="check todo">[ ]</span> Minimal persistent logs (per session) for reproducibility</li>
-        </ul>
-        <details>
-          <summary>Suggested folder layout</summary>
-          <p class="small">
-            <code>core/</code> (runner, patch, diff, session) • <code>validators/</code> (pytest, ruff, mypy) •
-            <code>strategies/</code> (rules, ai) • <code>ui/</code> (gui) • <code>cli/</code> (commands)
-          </p>
-        </details>
-      </section>
-
-      <section class="card half" data-text="current features built cli runner iteration loop timeout workdir file mode cmd mode json report gui editor open save mode selector iterations timeout workdir output stop error popups dark light theme toggle">
+      <section class="card half" data-text="current features built cli runner iteration loop timeout workdir file mode command mode json report gui editor open save live output streaming stop error popups dark light theme toggle stubs placeholders">
         <h2>Current Features <span class="tag ok">Already built</span></h2>
         <ul>
           <li><span class="check done">[✓]</span> CLI runner</li>
@@ -211,56 +190,35 @@
           <li><span class="check done">[✓]</span> GUI: dark/light theme toggle</li>
           <li><span class="check done">[✓]</span> AI + non-AI repair are currently placeholders (stubs)</li>
         </ul>
+        <div class="note"><span class="dot"></span><div>Resume angle: “I built the UI + runner loop + reporting foundation; next is safety + project-wide operation.”</div></div>
       </section>
 
-      <section class="card half" data-text="phase 1 essential must build next safe patch system snapshot diff preview approve reject rollback project mode folder entrypoints pytest multi-file fix cycles smart fixers ruff black imports mypy syntax dependency detection">
+      <!-- Phase 1–5: keep your original structure, but expanded with >= 3 items each -->
+      <section class="card half" data-text="phase 1 essential build next safe patch system snapshot diff preview approve reject rollback project mode folder entrypoints pytest multi-file repair cycles smart fixers ruff black import fixes mypy syntax pass dependency detection pip checks">
         <h2>Phase 1 — Essential <span class="tag todo">Build next</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Safe patch system: snapshot + diff preview + approve/reject + rollback</li>
           <li><span class="check todo">[ ]</span> Project mode: run a whole folder (entrypoints + <code>pytest</code>)</li>
-          <li><span class="check todo">[ ]</span> Multi-file repair cycles</li>
+          <li><span class="check todo">[ ]</span> Multi-file repair cycles (track changes across files per iteration)</li>
           <li><span class="check todo">[ ]</span> Smart fixers before AI: <code>ruff</code>, <code>black</code>, import fixes, <code>mypy</code>, syntax pass</li>
           <li><span class="check todo">[ ]</span> Dependency detection (missing packages, pip checks)</li>
         </ul>
         <details>
           <summary>Why this phase matters</summary>
-          <p class="small">This is the foundation that makes FixLoop safe + useful for real projects (and not scary to novices).</p>
+          <p class="small">This makes FixLoop safe for real projects: preview changes, validate them, and undo them instantly.</p>
         </details>
       </section>
 
-      <!-- NEW: Phase 1.5 (doubling essentials without copying) -->
-      <section class="card" data-text="phase 1.5 essential plus baselines config profiles reproducible env venv isolation requirements lockfile run matrix python versions log artifacts report html markdown">
-        <h2>Phase 1.5 — Essential+ <span class="tag todo">Stability</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Profiles: <code>safe</code> / <code>balanced</code> / <code>aggressive</code> (limits + validators)</li>
-          <li><span class="check todo">[ ]</span> Reproducible environment: detect/offer venv + capture <code>pip freeze</code> snapshot</li>
-          <li><span class="check todo">[ ]</span> Run matrix: try multiple entrypoints / Python versions (when available)</li>
-          <li><span class="check todo">[ ]</span> Artifact outputs: save logs + diffs + reports (HTML/Markdown export)</li>
-          <li><span class="check todo">[ ]</span> “No surprises” limits: max files touched, max lines changed, max iterations</li>
-        </ul>
-      </section>
-
-      <section class="card" data-text="phase 2 advanced real ai repair engine traceback context minimal patch validation plugin architecture custom fixers language modules external tools">
+      <section class="card" data-text="phase 2 advanced capabilities power real ai repair engine traceback context minimal patch validate plugin architecture custom fixers language modules external tools injection">
         <h2>Phase 2 — Advanced Capabilities <span class="tag todo">Power</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Real AI repair engine (traceback → context → minimal patch → validate)</li>
           <li><span class="check todo">[ ]</span> Plugin architecture (custom fixers, language modules, external tool injection)</li>
+          <li><span class="check todo">[ ]</span> Patch scoring (prefer smallest diff that passes validators)</li>
         </ul>
       </section>
 
-      <!-- NEW: Phase 2.5 (doubling advanced) -->
-      <section class="card" data-text="phase 2.5 advanced plus retrieval context slicing blame git history stack traces failing tests minimal repro synthesizer patch ranking confidence scoring explainability citations">
-        <h2>Phase 2.5 — Advanced+ <span class="tag todo">Precision</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Context slicer: include only relevant files/functions around failures</li>
-          <li><span class="check todo">[ ]</span> Minimal repro builder (auto-generate a tiny script that triggers the bug)</li>
-          <li><span class="check todo">[ ]</span> Patch ranking: score candidates by test impact + diff size + confidence</li>
-          <li><span class="check todo">[ ]</span> Explainability: “why this change” notes attached to each patch</li>
-          <li><span class="check todo">[ ]</span> Git-aware mode: branch + commit per iteration for clean rollback/audit</li>
-        </ul>
-      </section>
-
-      <section class="card" data-text="phase 3 professional tooling terminal panel project explorer syntax highlighting tabs embedded test runner">
+      <section class="card" data-text="phase 3 professional tooling polish built-in terminal panel project explorer tree click open syntax highlighting python first tabbed editing embedded test runner">
         <h2>Phase 3 — Professional Tooling <span class="tag todo">Polish</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Built-in terminal panel</li>
@@ -271,39 +229,16 @@
         </ul>
       </section>
 
-      <!-- NEW: Phase 3.5 (doubling pro tooling) -->
-      <section class="card" data-text="phase 3.5 pro tooling plus diff viewer inline side by side patch staging hunks approve per file search in project symbols go to definition references breadcrumbs command palette">
-        <h2>Phase 3.5 — Pro Tooling+ <span class="tag todo">Developer UX</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Diff viewer: side-by-side + inline mode, with per-hunk approval</li>
-          <li><span class="check todo">[ ]</span> Project search: file search + symbol search + quick jump</li>
-          <li><span class="check todo">[ ]</span> Command palette (quick actions: run, validate, rollback, export)</li>
-          <li><span class="check todo">[ ]</span> Quick-open (<code>Ctrl+P</code> style) + recent projects list</li>
-          <li><span class="check todo">[ ]</span> “Session timeline” panel (what happened, in order, with links)</li>
-        </ul>
-      </section>
-
-      <section class="card" data-text="phase 4 intelligence error intelligence panel classify error explain risk strategy learning system frequent errors fixes adaptive strategy">
+      <section class="card" data-text="phase 4 intelligence layer smart error intelligence panel classify explain risk strategy learning system frequent errors fixes adaptive strategy">
         <h2>Phase 4 — Intelligence Layer <span class="tag todo">Smart</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Error intelligence panel (type, explanation, risk level, strategy)</li>
           <li><span class="check todo">[ ]</span> Learning system (track frequent errors/fixes, adapt strategy)</li>
+          <li><span class="check todo">[ ]</span> “Stop conditions” (detect looping failures and recommend manual review)</li>
         </ul>
       </section>
 
-      <!-- NEW: Phase 4.5 (doubling intelligence) -->
-      <section class="card" data-text="phase 4.5 intelligence plus heuristics knowledge base fix recipes common python errors import errors type errors circular imports packaging issues cache of solutions guided prompts what to try next">
-        <h2>Phase 4.5 — Intelligence+ <span class="tag todo">Guidance</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Fix recipes: curated “known good” playbooks for common failures</li>
-          <li><span class="check todo">[ ]</span> Next-step suggestions: show 2–3 options with tradeoffs (safe → bold)</li>
-          <li><span class="check todo">[ ]</span> Failure clustering: group repeated errors across runs into a single story</li>
-          <li><span class="check todo">[ ]</span> Confidence meter for each proposed fix (plus what increases confidence)</li>
-          <li><span class="check todo">[ ]</span> “Stop conditions”: detect flailing loops and recommend human review</li>
-        </ul>
-      </section>
-
-      <section class="card" data-text="phase 5 user experience tiers beginner mode one click fix project simple explanations intermediate show diffs rollback advanced plugins language switching themes">
+      <section class="card" data-text="phase 5 user experience tiers beginner pro one click fix project simple explanations intermediate show iterations diffs rollback advanced strategy selection plugin manager language switching theme presets">
         <h2>Phase 5 — User Experience Tiers <span class="tag todo">Beginner → Pro</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Beginner mode: one-click “Fix Project” + simple explanations</li>
@@ -313,19 +248,109 @@
         </ul>
       </section>
 
-      <!-- NEW: Phase 5.5 (doubling UX tiers) -->
-      <section class="card" data-text="phase 5.5 ux plus onboarding tutorial sample project guided walkthrough safety warnings tooltips explainers keyboard shortcuts accessibility reduced motion export shareable report">
-        <h2>Phase 5.5 — UX+ <span class="tag todo">Adoption</span></h2>
+      <!-- Phase 6–15: add 10 more phases, each with >= 3 items -->
+      <section class="card" data-text="phase 6 safety governance guardrails limits max files touched max lines changed approvals per hunk change budget dry run mode read-only analyze mode">
+        <h2>Phase 6 — Safety & Governance <span class="tag todo">Guardrails</span></h2>
         <ul>
-          <li><span class="check todo">[ ]</span> Onboarding: guided walkthrough with a sample broken project</li>
-          <li><span class="check todo">[ ]</span> Contextual tooltips + “What changed?” explainer after each patch</li>
-          <li><span class="check todo">[ ]</span> Accessibility: font scaling, reduced motion, high-contrast theme option</li>
-          <li><span class="check todo">[ ]</span> Keyboard shortcuts cheat sheet + discoverable command hints</li>
-          <li><span class="check todo">[ ]</span> Shareable report bundle (logs + diffs + environment snapshot)</li>
+          <li><span class="check todo">[ ]</span> Change budgets (max files touched, max lines changed, max iterations)</li>
+          <li><span class="check todo">[ ]</span> Per-hunk approvals (accept/reject individual diff chunks)</li>
+          <li><span class="check todo">[ ]</span> Dry-run mode (generate patches + reports without writing files)</li>
+          <li><span class="check todo">[ ]</span> Safety policy presets: <code>safe</code> / <code>balanced</code> / <code>aggressive</code></li>
         </ul>
       </section>
 
-      <section class="card" data-text="integrations formatting black ruff autopep8 analysis mypy pylint bandit testing pytest coverage dependency pip check pipdeptree poetry multi language node eslint prettier c++ clang tidy rust cargo check java maven gradle">
+      <section class="card" data-text="phase 7 reproducibility environment venv isolation requirements lockfile pip freeze capture system info python version deterministic runs cache artifacts">
+        <h2>Phase 7 — Reproducible Environments <span class="tag todo">Reliable</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Auto-detect + offer venv creation and activation instructions</li>
+          <li><span class="check todo">[ ]</span> Capture environment snapshot (<code>python -V</code>, <code>pip freeze</code>, OS info)</li>
+          <li><span class="check todo">[ ]</span> Deterministic runs (store commands + args + workdir per session)</li>
+          <li><span class="check todo">[ ]</span> Cache artifacts (logs, diffs, reports) per run</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 8 validation pipeline validators ruff black mypy pytest coverage bandit pip check gating pass fail thresholds configurable">
+        <h2>Phase 8 — Validation Pipeline <span class="tag todo">Proof</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Unified validator runner (lint → typecheck → tests → security)</li>
+          <li><span class="check todo">[ ]</span> “Definition of Done” gate (must pass selected validators to mark success)</li>
+          <li><span class="check todo">[ ]</span> Configurable thresholds (e.g., coverage only if tests exist)</li>
+          <li><span class="check todo">[ ]</span> Validator summaries in the final report (what ran, what failed, why)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 9 diff ux patch viewer side by side inline blame annotate why change comments per file per hunk review queue">
+        <h2>Phase 9 — Diff & Review UX <span class="tag todo">Transparency</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Side-by-side diff viewer (inline + split view)</li>
+          <li><span class="check todo">[ ]</span> Annotate diffs with “why this changed” notes</li>
+          <li><span class="check todo">[ ]</span> Review queue (stage multiple patches, approve in order)</li>
+          <li><span class="check todo">[ ]</span> Quick rollback from the UI (one-click revert to snapshot)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 10 git integration branch per session commit per iteration tags checkpoints revert cherry-pick export patch files">
+        <h2>Phase 10 — Git Integration <span class="tag todo">Audit</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> “Session branch” mode (create branch automatically for fixes)</li>
+          <li><span class="check todo">[ ]</span> Commit-per-iteration (clean history + easy rollback)</li>
+          <li><span class="check todo">[ ]</span> Export patches (<code>.patch</code>) + release notes summary</li>
+          <li><span class="check todo">[ ]</span> Auto-detect uncommitted changes and warn before modifying</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 11 performance scalability parallel runs job queue worker pool incremental analysis file indexing caching throttle timeouts memory limits">
+        <h2>Phase 11 — Performance & Scalability <span class="tag todo">Fast</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Job queue for repairs (multiple targets, scheduled runs)</li>
+          <li><span class="check todo">[ ]</span> Parallel validators where safe (e.g., lint + typecheck)</li>
+          <li><span class="check todo">[ ]</span> Incremental analysis (only re-check touched files when possible)</li>
+          <li><span class="check todo">[ ]</span> Resource limits (CPU/mem caps, smart timeouts, cancellation)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 12 observability logs metrics telemetry dashboards session timeline events structured logging export json html markdown failure clustering">
+        <h2>Phase 12 — Observability & Reporting <span class="tag todo">Track</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Session timeline (every action recorded as events)</li>
+          <li><span class="check todo">[ ]</span> Report export: JSON + HTML + Markdown bundle</li>
+          <li><span class="check todo">[ ]</span> Metrics: iterations, patch sizes, pass rate, top error types</li>
+          <li><span class="check todo">[ ]</span> Failure clustering across runs (group repeating issues)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 13 security hardening bandit pip-audit semgrep secrets detection sandbox execution safe subprocess allowlist denylist path traversal">
+        <h2>Phase 13 — Security Hardening <span class="tag todo">Secure</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Add security scanners (<code>bandit</code>, <code>pip-audit</code>, optional <code>semgrep</code>)</li>
+          <li><span class="check todo">[ ]</span> Sandbox execution options (restricted subprocess policies)</li>
+          <li><span class="check todo">[ ]</span> Secret detection (warn if keys/tokens appear in diffs)</li>
+          <li><span class="check todo">[ ]</span> Path-safety checks (avoid writing outside project root)</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 14 multi-language framework node eslint prettier typescript rust cargo check c++ clang-tidy java maven gradle language adapters plugin sdk">
+        <h2>Phase 14 — Multi-Language Expansion <span class="tag todo">Beyond Python</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Language adapter interface (common runner + validators + patching)</li>
+          <li><span class="check todo">[ ]</span> Node/TS: ESLint + Prettier + test runner integration</li>
+          <li><span class="check todo">[ ]</span> Rust: <code>cargo check</code> + clippy integration</li>
+          <li><span class="check todo">[ ]</span> C++ / Java: clang-tidy + Maven/Gradle build/test hooks</li>
+        </ul>
+      </section>
+
+      <section class="card" data-text="phase 15 enterprise readiness teams roles permissions policy management templates org settings remote runners ci integration github actions gitlab ci audit logs">
+        <h2>Phase 15 — Enterprise Readiness <span class="tag todo">Teams</span></h2>
+        <ul>
+          <li><span class="check todo">[ ]</span> Role-based access (who can apply patches vs. preview only)</li>
+          <li><span class="check todo">[ ]</span> Policy templates (org-wide safety presets and validator rules)</li>
+          <li><span class="check todo">[ ]</span> CI integration modes (GitHub Actions / GitLab pipelines)</li>
+          <li><span class="check todo">[ ]</span> Audit logs + exportable compliance reports</li>
+        </ul>
+      </section>
+
+      <!-- Integrations + Vision Options: keep as you asked -->
+      <section class="card" data-text="integrations to inject tooling formatting black ruff autopep8 static analysis mypy pylint bandit testing pytest coverage dependencies pip check pipdeptree poetry future languages node eslint prettier c++ clang-tidy rust cargo check java maven gradle">
         <h2>Integrations to Inject <span class="tag todo">Tooling</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> Formatting: Black, Ruff, autopep8</li>
@@ -335,27 +360,15 @@
           <li><span class="check todo">[ ]</span> Future languages: Node (ESLint/Prettier), C++ (clang-tidy), Rust (cargo check), Java (Maven/Gradle)</li>
         </ul>
         <details>
-          <summary>More integrations (optional but useful)</summary>
+          <summary>Optional “nice-to-have” tooling later</summary>
           <p class="small">
-            Security: <code>pip-audit</code>, <code>semgrep</code> • Docs: <code>pydocstyle</code> •
-            Packaging: <code>build</code>, <code>twine</code> checks • Performance: <code>py-spy</code> (later)
+            Docs/style: <code>pydocstyle</code> • Packaging: <code>build</code>, <code>twine</code> checks •
+            Security: <code>semgrep</code> (optional) • Performance: profiling hooks (later)
           </p>
         </details>
       </section>
 
-      <!-- NEW: Quality Gates (doubles missing “professional” content) -->
-      <section class="card" data-text="quality gates definition of done ci cd github actions precommit hooks policy checks must pass tests lint typecheck security thresholds">
-        <h2>Quality Gates <span class="tag todo">Definition of Done</span></h2>
-        <ul>
-          <li><span class="check todo">[ ]</span> Pre-commit: run <code>ruff</code> + <code>black</code> + basic checks before patch apply</li>
-          <li><span class="check todo">[ ]</span> CI pipeline (GitHub Actions): test + lint + typecheck on push</li>
-          <li><span class="check todo">[ ]</span> Minimum validation rule per mode (Beginner/Intermediate/Advanced)</li>
-          <li><span class="check todo">[ ]</span> Coverage goals (optional): enforce only when a project already has tests</li>
-          <li><span class="check todo">[ ]</span> Security gates for dependency issues (warn → block on high severity)</li>
-        </ul>
-      </section>
-
-      <section class="card" data-text="vision options ai debug assistant stability engine ai ide replacement cross language auto repair platform">
+      <section class="card" data-text="vision options pick a direction ai debug assistant automated stability engine ai ide replacement cross-language auto-repair platform">
         <h2>Vision Options <span class="tag accent">Pick a direction</span></h2>
         <ul>
           <li><span class="check todo">[ ]</span> A) AI Debug Assistant</li>
@@ -366,22 +379,21 @@
         <p class="small">Tip: If you want “super advanced” without being scary, build Phase 1 (safe patch + diffs + project mode) first.</p>
       </section>
 
-      <!-- NEW: Deliverables / What you can show on a resume -->
-      <section class="card" data-text="deliverables resume portfolio demos screenshots gifs case studies before after bug fix stories measurable outcomes">
-        <h2>Portfolio Deliverables <span class="tag accent">Resume-ready</span></h2>
+      <!-- Resume-friendly punch -->
+      <section class="card" data-text="resume proof points portfolio deliverables demos case studies before after measurable outcomes architecture documentation readme screenshots gifs">
+        <h2>Resume / Portfolio Proof Points <span class="tag accent">Showcase</span></h2>
         <ul>
-          <li><span class="check todo">[ ]</span> 3 short case studies: “bug → fix loop → validation → report”</li>
-          <li><span class="check todo">[ ]</span> Demo pack: screenshots + short GIF of diff approval + rollback</li>
-          <li><span class="check todo">[ ]</span> Example projects: one beginner repo, one real-world repo, one multi-file failure</li>
-          <li><span class="check todo">[ ]</span> Metrics: average iterations, patch size, pass rate, common error classes</li>
-          <li><span class="check todo">[ ]</span> Clean README with architecture diagram + roadmap (this page)</li>
+          <li><span class="check todo">[ ]</span> 3 case studies (bug → fix loop → validation → report bundle)</li>
+          <li><span class="check todo">[ ]</span> Short demo GIF: “diff preview → approve → tests pass → rollback”</li>
+          <li><span class="check todo">[ ]</span> README: architecture diagram + roadmap + “how it works”</li>
+          <li><span class="check todo">[ ]</span> Metrics: average iterations, patch size, pass rate, common error types</li>
         </ul>
       </section>
 
     </div>
 
     <div class="footer" aria-label="Credits footer">
-      <div>© <span id="year"></span> FixLoop Studio • Built with a safety-first mindset.</div>
+      <div>© <span id="year"></span> FixLoop Studio • Built as a safety-first repair platform.</div>
       <div class="credits" aria-label="Creators">
         <span class="name">Isaac D&nbsp;DePina</span>
         <span class="sep">•</span>
@@ -392,9 +404,17 @@
 
   <script>
     const q = document.getElementById('q');
-    const cardsWrap = document.getElementById('cards');
     const cards = [...document.querySelectorAll('[data-text]')];
     const details = [...document.querySelectorAll('details')];
+
+    function updateKPIs(){
+      const visibleCards = cards.filter(c => !c.classList.contains('hide'));
+      const done = visibleCards.reduce((n, c) => n + c.querySelectorAll('.check.done').length, 0);
+      const todo = visibleCards.reduce((n, c) => n + c.querySelectorAll('.check.todo').length, 0);
+      document.getElementById('kDone').textContent = done;
+      document.getElementById('kTodo').textContent = todo;
+      document.getElementById('kCards').textContent = visibleCards.length;
+    }
 
     function filter() {
       const s = q.value.trim().toLowerCase();
@@ -413,41 +433,20 @@
       details.forEach(d => d.open = false);
     });
 
-    // Planned-only / all toggles
-    const btnPlanned = document.getElementById('showPlanned');
-    const btnAll = document.getElementById('showAll');
-
-    function showPlannedOnly() {
-      // Keep cards visible if they contain any TODO items
+    document.getElementById('showPlanned').addEventListener('click', () => {
       cards.forEach(card => {
         const hasTodo = !!card.querySelector('.check.todo');
         card.classList.toggle('hide', !hasTodo);
       });
       updateKPIs();
-    }
+    });
 
-    function showAll() {
+    document.getElementById('showAll').addEventListener('click', () => {
       cards.forEach(card => card.classList.remove('hide'));
-      filter(); // respects search box if used
-    }
+      filter(); // re-apply search if any text is in the box
+    });
 
-    btnPlanned.addEventListener('click', showPlannedOnly);
-    btnAll.addEventListener('click', showAll);
-
-    // KPIs
-    function updateKPIs(){
-      const visibleCards = cards.filter(c => !c.classList.contains('hide'));
-      const done = visibleCards.reduce((n, c) => n + c.querySelectorAll('.check.done').length, 0);
-      const todo = visibleCards.reduce((n, c) => n + c.querySelectorAll('.check.todo').length, 0);
-      document.getElementById('kDone').textContent = done;
-      document.getElementById('kTodo').textContent = todo;
-      document.getElementById('kPhases').textContent = visibleCards.length;
-    }
-
-    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Initial KPI calc
     updateKPIs();
   </script>
 </body>
