@@ -520,35 +520,42 @@
       closeModalBtn.addEventListener("click", hideModal);
       modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) hideModal(); });
       clearCredsBtn.addEventListener("click", () => { emailInput.value=""; passInput.value=""; emailInput.focus(); });
+doLoginBtn.addEventListener("click", async () => {
+  loginErr.style.display = "none";
+  loginErr.textContent = "";
 
-      doLoginBtn.addEventListener("click", async () => {
-        loginErr.style.display = "none";
-        loginErr.textContent = "";
-        if (!supabaseClient){
-          loginErr.style.display = "block";
-          loginErr.textContent = "Supabase not initialized (paste keys in script).";
-          return;
-        }
-        const email = (emailInput.value || "").trim();
-        const password = passInput.value || "";
-        if (!email || !password){
-          loginErr.style.display = "block";
-          loginErr.textContent = "Enter email + password.";
-          return;
-        }
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error){
-          loginErr.style.display = "block";
-          loginErr.textContent = error.message;
-          return;
-        }
-        hideModal();
-      });
+  if (!supabaseClient) {
+    loginErr.style.display = "block";
+    loginErr.textContent = "Supabase not initialized (paste keys in script).";
+    return;
+  }
 
-      logoutBtn.addEventListener("click", async () => {
-        if (!supabaseClient) return;
-        await supabaseClient.auth.signOut();
-      });
+  const email = (emailInput.value || "").trim();
+  if (!email) {
+    loginErr.style.display = "block";
+    loginErr.textContent = "Enter email.";
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithOtp({
+    email,
+    options: {
+      // IMPORTANT: must match your GitHub Pages URL (no trailing slash)
+      emailRedirectTo: "https://tyrienjones121-cmyk.github.io/fixloop-roadmap"
+    }
+  });
+
+  if (error) {
+    loginErr.style.display = "block";
+    loginErr.textContent = error.message;
+    return;
+  }
+
+    loginErr.style.display = "block";
+  loginErr.style.color = "#bff8e6";
+  loginErr.textContent = "Magic link sent — check your email and click Log In.";
+});
+
 
       // Checkbox listeners (local always; remote only when signed in)
       for (const it of $$(".item")){
@@ -576,5 +583,6 @@
   </script>
 </body>
 </html>
+
 
 
